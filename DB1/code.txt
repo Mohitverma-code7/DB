@@ -75,11 +75,11 @@ Customer.CustomerID > Order.CustomerID
 Order.OrderID > Order_Items.OrderID
 Product.ProductID > Order_Items.ProductID
 
+Category.CategoryID > Product.CategoryID
+
 Product.ProductID > Inventory.ProductID
 
 Order.OrderID > Payments.OrderID
 Order.OrderID > Shipping.OrderID
-
-Product.CategoryID > Category.CategoryID
 
 Product.ProductID > Product_Attributes.ProductID
