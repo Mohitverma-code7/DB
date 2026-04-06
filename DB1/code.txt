@@ -1,0 +1,85 @@
+colorMode pastel
+Customer [icon: user, color: Blue] {
+  CustomerID (PK)
+  Username varchar(50) not null unique
+  PhoneNumber varchar(15) not null unique
+  EmailAddress varchar(100) not null unique
+}
+
+Product [icon: box, color: Blue] {
+  ProductID (PK)
+  ProductName text
+  ProductDescription text
+  ProductType varchar(20)   
+  ProductPrice decimal
+  CategoryID (FK)
+}
+
+Category [icon: tag, color: Blue] {
+  CategoryID (PK)
+  CategoryName varchar(50)
+}
+
+Inventory [icon: database, color: Blue] {
+  InventoryID (PK)
+  ProductID (FK)
+  AvailableStock int
+}
+
+Order [icon: shopping-cart, color: Blue] {
+  OrderID (PK)
+  CustomerID (FK)
+  OrderDate datetime
+  TotalAmount decimal
+  OrderStatus varchar(20) 
+}
+
+Order_Items [icon: list, color: Blue] {
+  OrderItemID (PK)
+  OrderID (FK)
+  ProductID (FK)
+  QuantityOrdered int
+  PriceAtTimeOfPurchase decimal
+}
+
+Payments [icon: credit-card, color: Blue] {
+  PaymentID (PK)
+  OrderID (FK)
+  PaymentAmount decimal
+  PaymentMethod varchar(20)  
+  PaymentStatus varchar(20)  
+  PaymentDate datetime
+}
+
+Shipping [icon: truck, color: Blue, colorMode: pastel] {
+  ShippingID (PK)
+  OrderID (FK)
+  DeliveryAddress text
+  CourierServiceName varchar(50)
+  TrackingNumber varchar(100)
+  ShippedDate datetime
+  DeliveredDate datetime
+  ShippingStatus varchar(20)  
+}
+
+Product_Attributes [icon: settings, color: Blue] {
+  AttributeID (PK)
+  ProductID (FK)
+  AttributeName varchar(50)  
+  AttributeValue varchar(50)
+}
+
+
+Customer.CustomerID > Order.CustomerID
+
+Order.OrderID > Order_Items.OrderID
+Product.ProductID > Order_Items.ProductID
+
+Product.ProductID > Inventory.ProductID
+
+Order.OrderID > Payments.OrderID
+Order.OrderID > Shipping.OrderID
+
+Product.CategoryID > Category.CategoryID
+
+Product.ProductID > Product_Attributes.ProductID
