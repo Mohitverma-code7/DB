@@ -88,6 +88,6 @@ This system supports two types of products:
 
 ## 🖼️ ER Diagram
 
-![ER Diagram](./DB1.png)
+
 
 ---
