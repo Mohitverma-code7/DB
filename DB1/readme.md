@@ -88,7 +88,6 @@ This system supports two types of products:
 
 ## 🖼️ ER Diagram
 
-> 📌 Add your ER diagram image in the repository
-
-```md
 ![ER Diagram](./DB1.png)
+
+---
