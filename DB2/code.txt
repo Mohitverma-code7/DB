@@ -1,0 +1,106 @@
+users [icon:user, color: Yellow] {
+  user_id PK
+  name
+  email
+  password
+  role  
+  created_at
+}
+
+trainer_profiles [icon:activity, color: Blue] {
+  trainer_id PK FK
+  bio
+  experience_years
+  specialization
+}
+
+client_profiles [icon:smile, color: Red] {
+  client_id PK FK
+  age
+  gender
+  height
+  goal
+}
+
+plans [icon:box, color: Green] {
+  plan_id PK
+  trainer_id FK
+  name
+  description
+  duration_days
+  price
+  type  
+}
+
+subscriptions [icon:file-text, color: Purple] {
+  subscription_id PK
+  client_id FK
+  plan_id FK
+  start_date
+  end_date
+  status  
+}
+
+sessions [icon:calendar, color: Yellow] {
+  session_id PK
+  subscription_id FK
+  trainer_id FK
+  client_id FK
+  session_date
+  type  
+  status  
+}
+
+checkins [icon:bar-chart-2, color: Red] {
+  checkin_id PK
+  subscription_id FK
+  client_id FK
+  weight
+  body_fat
+  notes
+  checkin_date
+}
+
+measurements [icon:ruler, color: Blue] {
+  measurement_id PK
+  checkin_id FK
+  chest
+  waist
+  arms
+  thighs
+}
+
+trainer_notes [icon:edit, color: Purple] {
+  note_id PK
+  checkin_id FK
+  trainer_id FK
+  feedback
+}
+
+payments [icon:credit-card, color: Green] {
+  payment_id PK
+  subscription_id FK
+  amount
+  payment_date
+  method
+  status
+}
+
+users > trainer_profiles
+users > client_profiles
+
+users > plans
+
+users > subscriptions
+plans > subscriptions
+
+subscriptions > sessions
+sessions > users  
+
+subscriptions > checkins
+checkins > users
+
+checkins > measurements
+checkins > trainer_notes
+
+subscriptions > payments
