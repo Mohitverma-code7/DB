@@ -1,0 +1,92 @@
+colorMode bold
+styleMode plain
+notation crows-foot
+Table Patients [icon:user, color: Blue] {
+  patient_id int [pk]
+  name varchar
+  phone varchar
+  email varchar
+  gender varchar
+  date_of_birth date
+  created_at datetime
+}
+
+Table Doctors [icon:user, color: Blue] {
+  doctor_id int [pk]
+  name varchar
+  phone varchar
+  email varchar
+  specialization_id int [ref: > Specializations.specialization_id]
+}
+
+Table Specializations [icon:tag, color: Blue] {
+  specialization_id int [pk]
+  name varchar
+}
+
+Table Appointments [icon:calendar, color: Blue] {
+  appointment_id int [pk]
+  patient_id int [ref: > Patients.patient_id]
+  doctor_id int [ref: > Doctors.doctor_id]
+  appointment_date datetime
+  status varchar
+  created_at datetime
+}
+
+Table Consultations [icon:activity, color: Blue] {
+  consultation_id int [pk]
+  appointment_id int [ref: > Appointments.appointment_id]
+  patient_id int [ref: > Patients.patient_id]
+  doctor_id int [ref: > Doctors.doctor_id]
+  diagnosis text
+  notes text
+  consultation_date datetime
+}
+
+Table Tests [icon:flask, color: Blue] {
+  test_id int [pk]
+  test_name varchar
+  description text
+  price decimal
+}
+
+Table Consultation_Tests  [color: Blue][icon:link] {
+  consultation_test_id int [pk]
+  consultation_id int [ref: > Consultations [color: Blue].consultation_id]
+  test_id int [ref: > Tests.test_id]
+  status varchar
+}
+
+Table Reports [icon:file-text, color: Blue] {
+  report_id int [pk]
+  consultation_test_id int [ref: > Consultation_Tests.consultation_test_id]
+  result text
+  report_date datetime
+}
+
+Table Payments [icon:credit-card, color: Blue] {
+  payment_id int [pk]
+  patient_id int [ref: > Patients.patient_id]
+  appointment_id int [ref: > Appointments.appointment_id]
+  amount decimal
+  payment_method varchar
+  payment_status varchar
+  payment_date datetime
+}
+Patients.patient_id > Appointments.patient_id
+Doctors.doctor_id > Appointments.doctor_id
+
+Appointments.appointment_id > Consultations.appointment_id
+
+Patients.patient_id > Consultations.patient_id
+Doctors.doctor_id > Consultations.doctor_id
+
+Specializations.specialization_id > Doctors.specialization_id
+
+Consultations.consultation_id > Consultation_Tests.consultation_id
+Tests.test_id > Consultation_Tests.test_id
+
+Consultation_Tests.consultation_test_id > Reports.consultation_test_id
+
+Patients.patient_id > Payments.patient_id
+Appointments.appointment_id > Payments.appointment_id
