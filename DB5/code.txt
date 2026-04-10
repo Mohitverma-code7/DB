@@ -1,0 +1,104 @@
+notation crows-foot
+
+Building [icon: building, color: blue] {
+  building_id string PK
+  name string
+  address string
+  city string
+  timezone string
+}
+
+Floor [icon: layers, color: blue] {
+  floor_id string PK
+  building_id string FK
+  floor_number int
+  label string 
+}
+
+Shaft [icon: columns, color: blue] {
+  shaft_id string PK
+  building_id string FK
+  shaft_label string
+  zone_name string 
+}
+
+Elevator [icon: box, color: blue] {
+  elevator_id string PK
+  shaft_id string FK
+  model_type string
+  capacity_kg int
+  installation_date datetime
+}
+
+
+ElevatorStatus [icon: activity, color: green] {
+  elevator_id string PK, FK
+  current_status enum 
+  current_floor_id string FK
+  last_updated_at timestamp
+}
+
+ElevatorServiceFloor [icon: grid, color: red] {
+  elevator_id string PK, FK
+  floor_id string PK, FK
+}
+
+FloorRequest [icon: hand, color: yellow] {
+  request_id string PK
+  source_floor_id string FK
+  direction enum 
+  destination_floor_id string FK
+  request_time timestamp
+  status enum 
+}
+
+RideAssignment [icon: link, color: orange] {
+  assignment_id string PK
+  request_id string FK
+  elevator_id string FK
+  assigned_at timestamp
+}
+
+RideLog [icon: clock, color: purple] {
+  ride_id string PK
+  elevator_id string FK
+  request_id string FK
+  start_floor_id string FK
+  end_floor_id string FK
+  start_time timestamp
+  end_time timestamp
+  energy_consumed float
+}
+
+Maintenance [icon: tool, color: red] {
+  maintenance_id string PK
+  elevator_id string FK
+  technician_name string
+  maintenance_type enum 
+  description text
+  start_date datetime
+  end_date datetime
+  status enum 
+}
+
+
+Building <> Floor
+Building <> Shaft
+Building <> Elevator
+
+Shaft <> Elevator
+
+Elevator <> ElevatorStatus
+
+Elevator <> ElevatorServiceFloor
+Floor <> ElevatorServiceFloor
+
+Floor <> FloorRequest
+
+FloorRequest <> RideAssignment
+Elevator <> RideAssignment
+
+Elevator <> RideLog
+FloorRequest <> RideLog
+
+Elevator <> Maintenance
